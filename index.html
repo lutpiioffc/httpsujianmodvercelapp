@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>UJIAN AI MOD PRO - Smart Exam, Smart Future</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <!-- Top Floating Navbar -->
+    <header class="app-header">
+        <div class="brand">
+            <div class="logo-icon"><i class="fa-solid fa-brain"></i></div>
+            <div>
+                <h1>UJIAN AI MOD PRO</h1>
+                <small>Smart Exam, Smart Future</small>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button id="open-leaderboard-btn" class="icon-btn" title="Leaderboard"><i class="fa-solid fa-trophy"></i></button>
+            <button id="open-admin-btn" class="icon-btn" title="Admin Panel"><i class="fa-solid fa-shield-halved"></i></button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- SCREEN 1: LOGIN SISWA -->
+        <section id="login-screen" class="screen active">
+            <div class="auth-card">
+                <div class="card-badge">PORTAL SISWA</div>
+                <h2>Masuk Ujian Online</h2>
+                <p>Silakan masukkan identitas Anda untuk memulai sesi ujian.</p>
+                <form id="student-login-form">
+                    <div class="input-group">
+                        <label><i class="fa-solid fa-user"></i> Nama Lengkap</label>
+                        <input type="text" id="student-name" required placeholder="Contoh: Budi Santoso">
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fa-solid fa-school"></i> Kelas / Jurusan</label>
+                        <input type="text" id="student-class" required placeholder="Contoh: XII IPA 1">
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fa-solid fa-id-card"></i> Nomor Peserta</label>
+                        <input type="text" id="student-id" required placeholder="Contoh: EX-2026-001">
+                    </div>
+                    <button type="submit" class="primary-btn">MASUK DASHBOARD <i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+            </div>
+        </section>
+
+        <!-- SCREEN 2: DASHBOARD SISWA -->
+        <section id="dashboard-screen" class="screen">
+            <div class="dashboard-header">
+                <div>
+                    <h2>Halo, <span id="dash-name">Siswa</span>! 👋</h2>
+                    <p>Pilih mata pelajaran atau mode latihan AI di bawah ini.</p>
+                </div>
+                <button id="logout-btn" class="secondary-btn"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="dash-card ai-mod-card">
+                    <div class="card-tag">FITUR UNGGULAN AI MOD</div>
+                    <h3><i class="fa-solid fa-wand-magic-sparkles"></i> AI Study & Generator</h3>
+                    <p>Buat soal otomatis, ringkasan materi, atau minta AI jelaskan topik sulit seketika.</p>
+                    <button id="open-ai-helper-btn" class="ai-btn">BUKA AI ASSISTANT</button>
+                </div>
+
+                <div class="dash-card">
+                    <h3><i class="fa-solid fa-book-open"></i> Ujian Tersedia</h3>
+                    <div id="exam-list" class="exam-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div class="dash-card">
+                    <h3><i class="fa-solid fa-clock-rotate-left"></i> Riwayat & Sertifikat</h3>
+                    <div id="history-list" class="history-list">
+                        <p class="empty-text">Belum ada riwayat ujian.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 3: UJIAN BERLANGSUNG -->
+        <section id="exam-screen" class="screen">
+            <div class="exam-top-bar">
+                <div class="exam-info">
+                    <h3 id="active-exam-title">Matematika Dasar</h3>
+                    <span id="active-question-counter">Soal 1 dari 10</span>
+                </div>
+                <div class="timer-pill" id="timer-display">
+                    <i class="fa-solid fa-stopwatch"></i> <span id="time-left">00:00</span>
+                </div>
+            </div>
+
+            <div class="exam-layout">
+                <div class="question-container">
+                    <div class="question-box">
+                        <h4 id="question-text">Pertanyaan akan muncul di sini...</h4>
+                        <div id="options-container" class="options-container"></div>
+                        <div id="essay-container" class="essay-container hidden">
+                            <textarea id="essay-answer" rows="5" placeholder="Ketik jawaban esai Anda di sini..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="exam-nav-buttons">
+                        <button id="prev-btn" class="nav-btn"><i class="fa-solid fa-arrow-left"></i> Sebelumnya</button>
+                        <button id="ai-help-btn" class="ai-hint-btn"><i class="fa-solid fa-wand-magic-sparkles"></i> Minta Petunjuk AI</button>
+                        <button id="next-btn" class="nav-btn">Berikutnya <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Number Navigation Sidebar -->
+                <div class="question-nav-sidebar">
+                    <h4>Navigasi Soal</h4>
+                    <div id="question-nav-grid" class="question-nav-grid"></div>
+                    <button id="submit-exam-btn" class="submit-btn">KIRIM JAWABAN</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 4: HASIL UJIAN -->
+        <section id="result-screen" class="screen">
+            <div class="result-card">
+                <div class="result-icon"><i class="fa-solid fa-award"></i></div>
+                <h2>Ujian Selesai!</h2>
+                <p>Berikut adalah hasil analisis kinerja ujian Anda.</p>
+                
+                <div class="score-display-box">
+                    <div class="score-circle">
+                        <span id="final-score">85</span>
+                        <small>Nilai Akhir</small>
+                    </div>
+                    <div class="score-details">
+                        <p><b>Status:</b> <span id="result-status">LULUS</span></p>
+                        <p><b>Jawaban Benar:</b> <span id="correct-count">8</span> / <span id="total-count">10</span></p>
+                        <p><b>Waktu Pengerjaan:</b> <span id="time-taken">12 Menit</span></p>
+                    </div>
+                </div>
+
+                <div class="ai-analysis-box">
+                    <h4><i class="fa-solid fa-robot"></i> Analisis AI & Evaluasi</h4>
+                    <div id="ai-analysis-content" class="ai-analysis-content">Memuat analisis AI...</div>
+                </div>
+
+                <div class="result-btn-group">
+                    <button id="download-certificate-btn" class="primary-btn"><i class="fa-solid fa-certificate"></i> Unduh Sertifikat</button>
+                    <button id="back-dashboard-btn" class="secondary-btn">Kembali ke Dashboard</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- AI ASSISTANT MODAL -->
+    <div id="ai-modal" class="modal-overlay hidden">
+        <div class="modal-card wide">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-robot text-purple"></i> AI Study & Helper Assistant</h3>
+                <button id="close-ai-modal" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="ai-tabs">
+                    <button class="ai-tab active" data-tab="explain">Jelaskan Topik</button>
+                    <button class="ai-tab" data-tab="summarize">Rangkum Materi</button>
+                    <button class="ai-tab" data-tab="generate">Buat Soal Latihan</button>
+                </div>
+                <div class="ai-tab-content">
+                    <textarea id="ai-prompt-input" rows="3" placeholder="Tuliskan materi, topik sulit, atau soal yang ingin dibahas oleh AI..."></textarea>
+                    <button id="ai-submit-btn" class="primary-btn">Kirim ke AI Assistant</button>
+                    <div id="ai-response-box" class="ai-response-box hidden"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL MODAL -->
+    <div id="admin-modal" class="modal-overlay hidden">
+        <div class="modal-card wide">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-shield-halved"></i> Panel Administrator Ujian</h3>
+                <button id="close-admin-modal" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="admin-login-view" id="admin-login-view">
+                    <p>Masukkan PIN Admin untuk mengakses manajemen ujian.</p>
+                    <div class="input-group">
+                        <input type="password" id="admin-pin-input" placeholder="Masukkan PIN (Default: 1234)">
+                    </div>
+                    <button id="admin-login-submit" class="primary-btn">Masuk Admin</button>
+                </div>
+
+                <div class="admin-dashboard-view hidden" id="admin-dashboard-view">
+                    <div class="admin-tabs">
+                        <button class="admin-tab active" data-atab="exams">Kelola Ujian & Soal</button>
+                        <button class="admin-tab" data-atab="students">Hasil Siswa</button>
+                        <button class="admin-tab" data-atab="config">Konfigurasi API AI</button>
+                    </div>
+
+                    <div class="admin-tab-pane active" id="pane-exams">
+                        <div class="admin-actions-bar">
+                            <button id="create-exam-btn" class="primary-btn"><i class="fa-solid fa-plus"></i> Buat Ujian Baru</button>
+                        </div>
+                        <div id="admin-exam-list" class="admin-exam-list"></div>
+                    </div>
+
+                    <div class="admin-tab-pane" id="pane-students">
+                        <h4>Daftar Hasil & Nilai Siswa</h4>
+                        <div id="admin-student-results" class="admin-student-results"></div>
+                        <button id="export-csv-btn" class="secondary-btn" style="margin-top:12px;"><i class="fa-solid fa-file-excel"></i> Ekspor ke CSV</button>
+                    </div>
+
+                    <div class="admin-tab-pane" id="pane-config">
+                        <div class="input-group">
+                            <label>API Key Gemini / Claude (Opsional untuk AI Sungguhan)</label>
+                            <input type="password" id="admin-api-key" placeholder="AIzaSy...">
+                        </div>
+                        <button id="save-api-key-btn" class="primary-btn">Simpan API Key</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEADERBOARD MODAL -->
+    <div id="leaderboard-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-trophy text-amber"></i> Leaderboard Nilai Siswa</h3>
+                <button id="close-leaderboard" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="leaderboard-list" class="leaderboard-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
